@@ -9,6 +9,7 @@ import org.apache.plc4x.java.api.types.PlcClientDatatype;
 import org.apache.plc4x.java.modbus.config.ModbusConfiguration;
 import org.apache.plc4x.java.modbus.field.ModbusField;
 import org.apache.plc4x.java.modbus.field.ModbusFieldInputRegister;
+import org.apache.plc4x.java.modbus.readwrite.ModbusTcpADU;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,13 +19,16 @@ public class Test {
         System.out.println(ModbusFieldInputRegister.matches("0"));
         System.out.println(ModbusFieldInputRegister.matches("1"));
         System.out.println(ModbusFieldInputRegister.matches("2"));
-        String connectionString = "modbus://localhost:502";
+        System.out.println(ModbusFieldInputRegister.matches("4"));
+        System.out.println(ModbusFieldInputRegister.matches("5"));
+        String connectionString = "modbus://localhost:1522";
+
 
         try (PlcConnection plcConnection = new PlcDriverManager().getConnection(connectionString)) {
             plcConnection.connect();
 //            System.out.println(plcConnection.getMetadata());
             System.out.println(plcConnection.isConnected());
-            var builder=plcConnection.readRequestBuilder().addItem("value-3", "holding-register:1");
+            var builder=plcConnection.readRequestBuilder().addItem("value-3", "input-register:5");
 
             PlcReadRequest readRequest = builder.build();
 //            CompletableFuture<? extends PlcReadResponse> asyncResponse = readRequest.execute();
